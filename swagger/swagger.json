@@ -7,7 +7,8 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080"
+            "url": "http://localhost:8080",
+            "productionURL": "https://team-flow-api-r0ox.onrender.com"
         }
     ],
     "components": {

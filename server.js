@@ -50,6 +50,12 @@ app.use("/api", protectedRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes); // <-- Mount userRoutes for PUT & DELETE
+// Root route
+app.get("/", (req, res) => {
+    const productionURL = process.env.PRODUCTION_URL || "http://localhost:8080";
+    res.send(`TeamFlow API is running at ${productionURL}`);
+});
+
 
 // SWAGGER
 swaggerDocs(app);
