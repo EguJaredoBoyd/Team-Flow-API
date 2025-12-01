@@ -66,7 +66,7 @@ app.use(errorHandler);
 // START SERVER (skip during tests)
 const PORT = process.env.PORT || 8080;
 if (process.env.NODE_ENV !== "test") {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}/api-docs`));
 }
 
 export default app;
