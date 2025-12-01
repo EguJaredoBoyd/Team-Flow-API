@@ -53,7 +53,7 @@ app.use("/api/users", userRoutes); // <-- Mount userRoutes for PUT & DELETE
 // Root route
 app.get("/", (req, res) => {
     const productionURL = process.env.PRODUCTION_URL || "http://localhost:8080";
-    res.send(`TeamFlow API is running at ${productionURL}`);
+    res.send(`TeamFlow API is running at ${productionURL}/api-docs`);
 });
 
 
@@ -66,7 +66,7 @@ app.use(errorHandler);
 // START SERVER (skip during tests)
 const PORT = process.env.PORT || 8080;
 if (process.env.NODE_ENV !== "test") {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}/api-docs`));
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
 export default app;
