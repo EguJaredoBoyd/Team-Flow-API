@@ -11,7 +11,8 @@ const options = {
             description: "TeamFlow Project Management API with Auth, Projects, Tasks, and Users.",
         },
         servers: [
-            { url: "http://localhost:8080" }
+            { url: "http://localhost:8080", description: "Local Server" },
+            { url: "https://team-flow-api-r0ox.onrender.com", description: "Production Server" }
         ],
         components: {
             securitySchemes: {
@@ -25,7 +26,7 @@ const options = {
         security: [{ bearerAuth: [] }]
     },
 
-    apis: ["./routes/*.js", "./models/*.js"], // Scans all route files
+    apis: ["./routes/*.js", "./models/*.js"],
 };
 
 const swaggerSpec = swaggerJsDoc(options);
