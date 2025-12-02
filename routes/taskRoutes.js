@@ -59,11 +59,6 @@ const auth = require("../middleware/auth");
  *         description: Task created
  */
 
-// REAL ROUTES
-router.get("/", auth, taskController.getAllTasks);
-router.post("/", auth, taskController.createTask);
-
-
 /**
  * @swagger
  * /api/tasks/{id}:
@@ -75,6 +70,8 @@ router.post("/", auth, taskController.createTask);
  *         name: id
  *         schema:
  *           type: string
+ *         required: true
+ *         description: Task ID
  *     responses:
  *       200:
  *         description: Task found
@@ -85,11 +82,28 @@ router.post("/", auth, taskController.createTask);
  *     parameters:
  *       - in: path
  *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Task ID
  *     requestBody:
  *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *                 enum: [todo, in-progress, done]
+ *             example:
+ *               title: "Updated homepage UI"
+ *               status: "in-progress"
  *     responses:
  *       200:
- *         description: Task updated
+ *         description: Task updated successfully
  *
  *   delete:
  *     tags: [Tasks]
@@ -97,12 +111,18 @@ router.post("/", auth, taskController.createTask);
  *     parameters:
  *       - in: path
  *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Task ID
  *     responses:
  *       200:
- *         description: Task deleted
+ *         description: Task deleted successfully
  */
 
 // REAL ROUTES
+router.get("/", auth, taskController.getAllTasks);
+router.post("/", auth, taskController.createTask);
 router.get("/:id", auth, taskController.getTaskById);
 router.put("/:id", auth, taskController.updateTask);
 router.delete("/:id", auth, taskController.deleteTask);

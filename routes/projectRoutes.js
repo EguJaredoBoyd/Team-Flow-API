@@ -62,11 +62,6 @@ const auth = require("../middleware/auth");
  *         description: Project created successfully
  */
 
-// REAL ROUTES
-router.get("/", auth, projectController.getAllProjects);
-router.post("/", auth, projectController.createProject);
-
-
 /**
  * @swagger
  * /api/projects/{id}:
@@ -76,7 +71,10 @@ router.post("/", auth, projectController.createProject);
  *     parameters:
  *       - in: path
  *         name: id
+ *         schema:
+ *           type: string
  *         required: true
+ *         description: Project ID
  *     responses:
  *       200:
  *         description: Project found
@@ -87,12 +85,35 @@ router.post("/", auth, projectController.createProject);
  *     parameters:
  *       - in: path
  *         name: id
+ *         schema:
+ *           type: string
  *         required: true
+ *         description: Project ID
  *     requestBody:
  *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               deadline:
+ *                 type: string
+ *                 format: date
+ *               status:
+ *                 type: string
+ *                 enum: [pending, active, completed]
+ *             example:
+ *               title: "Updated CRM"
+ *               description: "Updated project description"
+ *               deadline: "2025-12-31"
+ *               status: "active"
  *     responses:
  *       200:
- *         description: Project updated
+ *         description: Project updated successfully
  *
  *   delete:
  *     tags: [Projects]
@@ -100,13 +121,18 @@ router.post("/", auth, projectController.createProject);
  *     parameters:
  *       - in: path
  *         name: id
+ *         schema:
+ *           type: string
  *         required: true
+ *         description: Project ID
  *     responses:
  *       200:
- *         description: Project deleted
+ *         description: Project deleted successfully
  */
 
 // REAL ROUTES
+router.get("/", auth, projectController.getAllProjects);
+router.post("/", auth, projectController.createProject);
 router.get("/:id", auth, projectController.getProjectById);
 router.put("/:id", auth, projectController.updateProject);
 router.delete("/:id", auth, projectController.deleteProject);
