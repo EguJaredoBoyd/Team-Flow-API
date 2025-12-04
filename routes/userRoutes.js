@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const userController = require("../controllers/userController");
 
-
 /**
  * @swagger
  * tags:
@@ -37,10 +36,9 @@ const userController = require("../controllers/userController");
  *           example: StrongPass123
  */
 
-
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     tags: [Users]
  *     summary: Get all registered users
@@ -58,11 +56,9 @@ const userController = require("../controllers/userController");
  */
 router.get("/", auth, userController.getAllUsers);
 
-
-
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   put:
  *     tags: [Users]
  *     summary: Update a user by ID
@@ -91,11 +87,9 @@ router.get("/", auth, userController.getAllUsers);
  */
 router.put("/:id", auth, userController.updateUser);
 
-
-
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   delete:
  *     tags: [Users]
  *     summary: Delete a user by ID
@@ -113,6 +107,5 @@ router.put("/:id", auth, userController.updateUser);
  *         description: User deleted successfully
  */
 router.delete("/:id", auth, userController.deleteUser);
-
 
 module.exports = router;
