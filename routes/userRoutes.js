@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
+import auth from "../middleware/auth.js";
+import userController from "../controllers/userController.js";
+
 const router = express.Router();
-const auth = require("../middleware/auth");
-const userController = require("../controllers/userController");
 
 /**
  * @swagger
@@ -20,20 +21,18 @@ const userController = require("../controllers/userController");
  *         - name
  *         - email
  *       properties:
- *         _id:
+ *         id:
  *           type: string
- *           description: MongoDB ID
- *           example: 67a12345bcde902345ff1234
  *         name:
  *           type: string
- *           example: Augustine
  *         email:
  *           type: string
- *           example: augustine@example.com
  *         password:
  *           type: string
- *           description: User password (hashed internally)
- *           example: StrongPass123
+ *       example:
+ *         name: "Augustine"
+ *         email: "augustine@example.com"
+ *         password: "StrongPass123"
  */
 
 /**
@@ -41,36 +40,63 @@ const userController = require("../controllers/userController");
  * /api/users:
  *   get:
  *     tags: [Users]
- *     summary: Get all registered users
+ *     summary: Get all users
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of users
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
  */
 router.get("/", auth, userController.getAllUsers);
 
 /**
  * @swagger
  * /api/users/{id}:
- *   put:
+ *   get:
  *     tags: [Users]
- *     summary: Update a user by ID
- *     security:
- *       - bearerAuth: []
+ *     summary: Get user by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User found
+ */
+router.get("/:id", auth, userController.getUserById);
+
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     tags: [Users]
+ *     summary: Create a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: User created
+ */
+router.post("/", auth, userController.createUser);
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     tags: [Users]
+ *     summary: Update a user
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -79,11 +105,7 @@ router.get("/", auth, userController.getAllUsers);
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: User updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
+ *         description: User updated
  */
 router.put("/:id", auth, userController.updateUser);
 
@@ -92,20 +114,17 @@ router.put("/:id", auth, userController.updateUser);
  * /api/users/{id}:
  *   delete:
  *     tags: [Users]
- *     summary: Delete a user by ID
- *     security:
- *       - bearerAuth: []
+ *     summary: Delete a user
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: User ID
  *     responses:
  *       200:
- *         description: User deleted successfully
+ *         description: User deleted
  */
 router.delete("/:id", auth, userController.deleteUser);
 
-module.exports = router;
+export default router;
